@@ -1,5 +1,5 @@
 # source: https://gist.github.com/MrEliptik/b3f16179aa2f530781ef8ca9a16499af
-# downloaded 3/5/2023
+# downloaded 3/5/2023 and modified
 
 import re, string, unicodedata
 import nltk
@@ -8,7 +8,11 @@ import inflect
 from nltk import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import LancasterStemmer, WordNetLemmatizer
+from nltk.tokenize import TweetTokenizer
+import pandas as pd
+from collections import Counter
 
+import logging
 
 def replace_contractions(text):
     """Replace contractions in string of text"""
@@ -107,6 +111,37 @@ def preprocess(sample):
 
     # Normalize
     return normalize(words)
+
+
+# build custom preprocessor and custom tokenizer functions
+def preprocessor(text):
+    text = remove_URL(text)
+    return text
+
+
+def tokenizer(text):
+    tokenizer = TweetTokenizer()
+    words = tokenizer.tokenize(text)
+    words = remove_non_ascii(words)
+    words = to_lowercase(words)
+    words = remove_punctuation(words)
+    words = remove_stopwords(words)
+    return words
+
+
+def count_words_from_series(ds_text: pd.Series) -> pd.DataFrame:
+    # join all texts into one string
+    text = ' '.join(i for i in ds_text)
+
+    # preprocess and tokenize text
+    text = preprocessor(text)
+    words = tokenizer(text)
+
+    # build frequency map
+    df_words = pd.DataFrame.from_dict(Counter(words), orient='index').rename(columns={0: 'count'})
+    df_words.sort_values(by='count', ascending=False, inplace=True)
+    logging.info(f'Unique words: {len(df_words)}')
+    return df_words
 
 
 if __name__ == "__main__":
