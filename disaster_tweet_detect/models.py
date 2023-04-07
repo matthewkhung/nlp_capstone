@@ -90,7 +90,8 @@ def evaluate_ridge_classifier(model_path: str,
     summary.add('Ridge Classifier', y_test, pred)
 
 
-def train_xgboost_classifier(X_train: pd.DataFrame, y_train: pd.Series):
+def train_xgboost_classifier(X_train: np.ndarray, y_train: np.ndarray):
+    """Train XGBoost classifier and return model."""
     # XGBoost classifier
     # xgboost manual: https://xgboost.readthedocs.io/en/stable/parameter.html
     # tuning guide: https://www.kaggle.com/code/prashant111/a-guide-on-xgboost-hyperparameters-tuning/notebook
@@ -137,6 +138,7 @@ def evaluate_xgboost_classifier(model_path: str,
                                 X_train: pd.DataFrame, X_test: pd.DataFrame,
                                 y_train: pd.Series, y_test: pd.Series,
                                 summary: Summary):
+    """Evaluate and add XGBoost classifier results to summary."""
     try:
         # load model from file
         model = pickle.load(open(model_path, "rb"))
@@ -149,3 +151,11 @@ def evaluate_xgboost_classifier(model_path: str,
     # evaluate and save to summary
     summary.add('XGBoost Classifier', y_test, pred)
 
+
+def load_xgboost_classifier(model_path: str):
+    """Unpickle the model and return it."""
+    try:
+        # load model from file
+        return pickle.load(open(model_path, "rb"))
+    except:
+        return None
