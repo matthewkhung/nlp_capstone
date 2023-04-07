@@ -40,8 +40,7 @@ class DisasterTweetDetector:
 
 
 if __name__ == "__main__":
-    debug = True
-    #debug = os.getenv('DEBUG', 'false') == 'true'
+    debug = os.getenv('DEBUG', 'false') == 'true'
 
     if debug:
         app = DisasterTweetDetector()
