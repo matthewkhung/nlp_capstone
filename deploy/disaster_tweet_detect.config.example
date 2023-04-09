@@ -1,0 +1,5 @@
+[default]
+image_name=<target_image_name>
+docker_repo=<target_docker_repository>
+docker_usr=<username>
+docker_pwd=<password>

@@ -9,7 +9,7 @@ COPY disaster_tweet_detect ./disaster_tweet_detect
 COPY README.md .
 COPY setup.py .
 COPY requirements.txt .
-COPY disaster_tweet_detect.pipeline .
+COPY deploy/disaster_tweet_detect.pipeline .
 
 # copy necessary files to docker (streamlit)
 COPY app ./app
@@ -22,10 +22,11 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt  && \
 
 EXPOSE 80
 
-ENTRYPOINT [ "streamlit", "run", "./app/app.py", \
-             "--server.port", "80", \
-             "--server.enableCORS", "true", \
-             "--server.enableXsrfProtection", "true", \
-             "--server.enableWebsocketCompression", "true", \
-             "--browser.serverAddress", "0.0.0.0", \
-             "--browser.serverPort", "443"]
+ENTRYPOINT [ "streamlit", "run"]
+CMD ["./app/app.py", \
+     "--server.port", "80", \
+     "--server.enableCORS", "true", \
+     "--server.enableXsrfProtection", "true", \
+     "--server.enableWebsocketCompression", "true", \
+     "--browser.serverAddress", "0.0.0.0", \
+     "--browser.serverPort", "80"]
