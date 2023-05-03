@@ -9,7 +9,6 @@ COPY disaster_tweet_detect ./disaster_tweet_detect
 COPY README.md .
 COPY setup.py .
 COPY requirements.txt .
-COPY deploy/disaster_tweet_detect.pipeline .
 
 # copy necessary files to docker (streamlit)
 COPY app ./app
