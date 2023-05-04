@@ -17,8 +17,7 @@ Based on the test results below, ALBERT has the highest accuracy and AUROC.
 Samples were prepared by splitting the training data set into train and test sets. In the case of DNNs, the train set
 was further split into train and validation sets as cross-validation was done manually. The train and validation sets
 were used for training and cross-validation purposes while the test set was used to evaluate the model and was only used
-once per
-model.
+once per model.
 
 ## Models
 
